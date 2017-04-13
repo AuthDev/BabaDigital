@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:drawable/divider_horizontal_bright"
+        android:background="@drawable/facebookbutton">
+
+        <TextView
+            android:text="@string/criancas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nomeCriancaNotificacoesListTitle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/background_light"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@drawable/midle"
+        android:clickable="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:text="infor1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/not1ItemNotficacoes"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="infor2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/not2ItemNotficacoes"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="infor3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/not3ItemNotficacoes"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/verMaisItemNotficacoes"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                tools:text="Ver Mais"
+                android:textStyle="normal|bold"
+                android:clickable="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
