@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#690928</color>
-    <color name="colorPrimaryDark">#4d031b</color>
+    <color name="colorPrimaryDark">#430419</color>
     <color name="colorAccent">#79032b</color>
     <color name="azul1">#4079ff</color>
     <color name="azul2">#3d53b6</color>
@@ -9,12 +9,13 @@
     <color name="menuCorSecundaria">#5eb5c9</color>
     <color name="cinClaro">#fdf7f7</color>
     <color name="preto">#380214</color>
-    <color name="background_material_light">#1c1b1b</color>
+    <color name="background_material_light">#fefefe</color>
     <color name="primary_text_default_material_dark">#504949</color>
     <color name="foreground_material_light">#fafafa</color>
     <color name="secondary_text_material_light">#bd000000</color>
     <color name="secondary_text_material_dark">#f0141313</color>
     <color name="background_material_dark">#fefbfb</color>
     <color name="BackGray">#ffdcdc</color>
+    <color name="primary_dark_material_light">#fefdfd</color>
 
 </resources>

@@ -15,6 +15,7 @@ public class informacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_informacoes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
     }
 }
