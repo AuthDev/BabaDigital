@@ -2,6 +2,8 @@
     <string name="app_name">Baba Digital</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_inicio">Inicio</string>
+    <string name="deleteSucesso">Apagado com sucesso!</string>
+    <string name="deleteFalha">Falha ao tentar apagar!</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -288,5 +290,9 @@
     <string name="garota">Garota</string>
     <string name="garoto">Garoto</string>
     <string name="nomeDaCrianca">Nome da Criança</string>
+    <string name="novaCrianca">Nova criança</string>
+    <string name="title_activity_criancas_editar">Editar Criança</string>
+    <string name="apagar">Apagar</string>
+    <string name="salvar">Salvar</string>
 
 </resources>

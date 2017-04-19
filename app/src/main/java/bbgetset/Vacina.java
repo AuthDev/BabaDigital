@@ -8,14 +8,13 @@ public class Vacina {
 
     private String nome;
     private String informaçao;
-    private VacinaIdade vacinaIdade;
+    private String vacinaIdade;;
 
     public Vacina()
     {
-        nome = "sem Nome";
+        nome = "Sem Nome";
         informaçao = "sem informaçao";
-        vacinaIdade = new VacinaIdade();
-        vacinaIdade.add(0);
+        vacinaIdade = " ";
 
     }
 
@@ -36,11 +35,12 @@ public class Vacina {
         this.informaçao = informaçao;
     }
 
-    public VacinaIdade getVacinaIdade() {
-        return vacinaIdade;
+    public String getVacinaIdade() {
+        return this.vacinaIdade;
     }
 
-    public void setVacinaIdade(VacinaIdade vacinaIdade) {
+    public void setVacinaIdade(String vacinaIdade)
+    {
         this.vacinaIdade = vacinaIdade;
     }
 }

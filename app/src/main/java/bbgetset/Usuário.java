@@ -22,7 +22,7 @@ public class Usuário {
     private Date dataNascimento;
     private Endereço endereço;
     private int idade;
-    private Sexo sexo;
+    private String sexo;
     private boolean validated = false;
     private String stringJSON = "";
 
@@ -59,15 +59,14 @@ public class Usuário {
             setNome(jsonObject.getString("nome"));
 
             //Set Sexo
-            Sexo sexo = new Sexo();
             if(jsonObject.getString("sexo").contains("m"))
             {
-                sexo.setMasculino();
+                sexo = Sexo.MASCULINO;
             }else
             {
-                sexo.setFeminino();
+                sexo = Sexo.MASCULINO;
             }
-            setSexo(sexo);
+
 
             //Set numero celular
             setNumeroCelular(jsonObject.getString("numeroCelular"));
@@ -140,14 +139,15 @@ public class Usuário {
 
     public int getIdade() {
         try{
-            int anoNascimento = dataNascimento.getYear();
+            int anoNascimento = dataNascimento.getYear() +1900;
             int mesNascimento = dataNascimento.getMonth();
             int diaNascimento = dataNascimento.getDay();
 
             Date date = new Date(System.currentTimeMillis());
-            int anoAtual = date.getYear();
+            int anoAtual = date.getYear()+1900;
             int mesAtual = date.getMonth();
             int diaAtual = date.getDay();
+
 
             idade = anoAtual - anoNascimento;
             if(mesAtual < mesNascimento)
@@ -168,11 +168,11 @@ public class Usuário {
         }
     }
 
-    public Sexo getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(Sexo sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 

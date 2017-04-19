@@ -86,7 +86,16 @@
         <activity
             android:name=".novaCriancaActivity"
             android:label="@string/title_activity_nova_crianca"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CriancasEditarActivity"
+            android:label="@string/title_activity_criancas_editar"
+            android:parentActivityName=".CriancasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.evar.babadigital.CriancasActivity" />
+        </activity>
     </application>
 
 </manifest>

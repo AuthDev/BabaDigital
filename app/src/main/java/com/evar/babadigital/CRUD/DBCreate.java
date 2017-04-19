@@ -13,7 +13,7 @@ import bbgetset.VacinaTomada;
  * Created by maxson on 16/04/17.
  */
 
-public class Create extends SQLiteOpenHelper{
+public class DBCreate extends SQLiteOpenHelper{
 
     private static final String DB_PATH = "/data/user/0/com.evar.babadigital/databases/BB_DB";
     private static final String DB_NAME = "BB_DB";
@@ -28,7 +28,7 @@ public class Create extends SQLiteOpenHelper{
 
 
 
-    public Create(Context context) {
+    public DBCreate(Context context) {
         super(context, DB_NAME, null, VERSAO_DB);
         this.nContext =context;
         db = getWritableDatabase();
@@ -48,20 +48,20 @@ public class Create extends SQLiteOpenHelper{
     {
         openDB();
         String createTable1 =  "CREATE TABLE IF NOT EXISTS "+TABLE_CRIANÇAS+" ("
-                + "cod INT NOT NULL IDENTITY(1,1) PRIMARY KEY,"
+                + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "nome TEXT,"
                 + "sexo TEXT,"
                 + "dataNascimento TEXT,"
                 + "usuarioEmail TEXT)";
         String createTable2 =  "CREATE TABLE IF NOT EXISTS "+TABLE_VACINAS+" ("
-                + "cod INT NOT NULL IDENTITY(1,1) PRIMARY KEY,"
+                + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "nome TEXT,"
                 + "informacoes TEXT,"
                 + "vacinaIdade TEXT,"
                 + "rede TEXT)";
 
         String createTable3 =  "CREATE TABLE IF NOT EXISTS "+TABLE_VACINAS_TOMADAS+" ("
-                + "cod INT NOT NULL IDENTITY(1,1) PRIMARY KEY,"
+                + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "data TEXT,"
                 + "localTomado TEXT,"
                 + "validade TEXT,"
@@ -69,6 +69,7 @@ public class Create extends SQLiteOpenHelper{
                 + "criança_cod INT)";
 
         String createTable4 = "CREATE TABLE IF NOT EXISTIS "+TABLE_NOTICACOES+"("
+                + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
                 +"descricao TEXT,"
                 +"crianca_cod INT)";
 

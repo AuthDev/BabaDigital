@@ -62,15 +62,14 @@ public class BAPI{
                 criança.setDataNascimento(dataNascimento);
 
                 //Set Sexo #######################################################
-                Sexo sexo = new Sexo();
                 if(jsonObject.getString("sexo").contains("asculino"))
                 {
-                    sexo.setMasculino();
+                    criança.setSexo(Sexo.MASCULINO);
                 }else
                 {
-                    sexo.setFeminino();
+                    criança.setSexo(Sexo.FEMININO);
                 }
-                criança.setSexo(sexo);
+
 
                 //Set nome ########################################################
                 criança.setNome(jsonObject.getString("nome"));
@@ -95,13 +94,7 @@ public class BAPI{
 
                     vacina.setNome(jsVacinasTomadas.getJSONObject(j).getString("nome"));
                     vacina.setInformaçao(jsVacinasTomadas.getJSONObject(j).getString("informaçao"));
-                    VacinaIdade vacinaIdade = new VacinaIdade();
-                    JSONArray jsVacinaIdades = jsVacinasTomadas.getJSONArray(j).getJSONArray(j);
-
-                    for (int k = 0; k < jsVacinaIdades.length(); k++) {
-                        vacinaIdade.add(jsVacinaIdades.getInt(k));
-                    }
-                    vacina.setVacinaIdade(vacinaIdade);
+                    vacina.setVacinaIdade("10 - 20");
                     vacinaTomada.setVacina(vacina);
 
                     // Set data
@@ -141,15 +134,14 @@ public class BAPI{
                 criança.setDataNascimento(dataNascimento);
 
                 //Set Sexo #######################################################
-                Sexo sexo = new Sexo();
+                //Set Sexo #######################################################
                 if(jsonObject.getString("sexo").contains("asculino"))
                 {
-                    sexo.setMasculino();
+                    criança.setSexo(Sexo.MASCULINO);
                 }else
                 {
-                    sexo.setFeminino();
+                    criança.setSexo(Sexo.FEMININO);
                 }
-                criança.setSexo(sexo);
 
                 //Set nome ########################################################
                 criança.setNome(jsonObject.getString("nome"));
@@ -180,7 +172,7 @@ public class BAPI{
                     for (int k = 0; k < jsVacinaIdades.length(); k++) {
                         vacinaIdade.add(jsVacinaIdades.getInt(k));
                     }
-                    vacina.setVacinaIdade(vacinaIdade);
+                    vacina.setVacinaIdade(jsVacinasTomadas.getJSONObject(0).getString("vacinaIdade"));
                     vacinaTomada.setVacina(vacina);
 
                     // Set data
@@ -254,12 +246,9 @@ public class BAPI{
 
                 vacina.setNome(jsVacinas.getString("nome"));
 
-                VacinaIdade vacinaIdade = new VacinaIdade();
-                for (int j = 0; j < jsVacinas.getJSONArray("idade").length(); j++) {
-                    vacinaIdade.add(jsVacinas.getJSONArray("idade").getInt(j));
-                }
 
-                vacina.setVacinaIdade(vacinaIdade);
+
+                vacina.setVacinaIdade(jsVacinas.getString("vacinaIdade"));
                 vacinas.add(i,vacina);
             }
 

@@ -9,17 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.evar.babadigital.CRUD.DBCreate;
+
 public class CarregarActivity extends AppCompatActivity {
 
     Handler handler = new Handler();
     private boolean logado = false;
+    DBCreate dbCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carregar);
+        dbCreate = new DBCreate(getApplicationContext());
 
-
+        dbCreate.createTable();
 
         Thread thread = new Thread(new Runnable() {
             @Override

@@ -38,7 +38,6 @@ public class CadastroActivity extends AppCompatActivity {
     private String confirmarSenha;
     private String celular;
     private Date dataNascimento;
-    private Sexo sexo;
     private String rua;
     private String bairro;
     private String numero;
@@ -172,16 +171,16 @@ public class CadastroActivity extends AppCompatActivity {
                     }
 
 
-                sexo = new Sexo();
+
                 switch (spinSexo.getSelectedItemPosition())
                 {
-                    case 0: sexo.setMasculino();
+                    case 0:  usuário.setSexo(Sexo.MASCULINO);
                         break;
-                    case 1:sexo.setFeminino();
+                    case 1: usuário.setSexo(Sexo.FEMININO);
                         break;
-                    default:sexo.setMasculino();
+                    default:usuário.setSexo(Sexo.MASCULINO);
                 }
-                usuário.setSexo(sexo);
+
 
 
                 if(rua.length() > 0)

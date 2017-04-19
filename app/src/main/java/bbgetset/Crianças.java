@@ -39,15 +39,11 @@ public class Crianças {
                 criancaUn.setNome(jsonArray.getJSONObject(i).getString("nome"));
                 if(jsonArray.getJSONObject(i).getString("sexo").contains(Sexo.FEMININO))
                 {
-                    sexo = new Sexo();
-                    sexo.setFeminino();
-                    criancaUn.setSexo(sexo);
+                    criancaUn.setSexo(Sexo.FEMININO);
 
                 }else
                     {
-                        sexo = new Sexo();
-                        sexo.setMasculino();
-                        criancaUn.setSexo(sexo);
+                        criancaUn.setSexo(Sexo.MASCULINO);
                     }
                 Date data;
                 DateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
@@ -73,10 +69,8 @@ public class Crianças {
 
                     vacina.setNome(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getString("nome"));
                     vacina.setInformaçao(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getString("informacao"));
-                    for (int k = 0; k < jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").length();k++) {
-                        vacinaIdade.add(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").getInt(k));
-                    }
-                    vacina.setVacinaIdade(vacinaIdade);
+
+                    vacina.setVacinaIdade(jsonArray.getJSONObject(i).getJSONObject("vacinasTomadas").getString("vacinaIdade"));
                     vacinaTomada = new VacinaTomada();
                     vacinaTomada.setVacina(vacina);
 
@@ -125,16 +119,9 @@ public class Crianças {
                 criancaUn = criançasArray.get(i);
                 jsonArray.getJSONObject(i).put("nome",criancaUn.getNome());
 
-                Sexo sx= new Sexo();
-                sx.setFeminino();
-                if(criancaUn.getSexo() == sx)
-                {
-                    jsonArray.getJSONObject(i).put("sexo",Sexo.FEMININO);
 
-                }else
-                {
-                    jsonArray.getJSONObject(i).put("sexo",Sexo.MASCULINO);
-                }
+                jsonArray.getJSONObject(i).put("sexo",criancaUn.getSexo());
+
 
                 jsonArray.getJSONObject(i).put("dataNascimento",criancaUn.getDataNascimento().toString());
 
@@ -151,7 +138,7 @@ public class Crianças {
 
 
                     for (int k = 0; k < jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").length();k++) {
-                        jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").put(criancaUn.getVacinasTomadas().get(j).getVacina().getVacinaIdade().getIdade(k));
+                        jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").put(criancaUn.getVacinasTomadas().get(j).getVacina().getVacinaIdade());
                     }
 
                     jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("validade",criancaUn.getVacinasTomadas().get(j).getValidade());

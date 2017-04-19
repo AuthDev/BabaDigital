@@ -1,6 +1,7 @@
 package com.evar.babadigital;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,11 +15,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
-import com.evar.babadigital.CRUD.DBCreate;
 import com.evar.babadigital.CRUD.DBUpdate;
 import com.evar.babadigital.utils.Mask;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,19 +29,23 @@ import bbgetset.Criança;
 import bbgetset.Sexo;
 import bbgetset.Usuário;
 
-public class novaCriancaActivity extends AppCompatActivity {
+public class CriancasEditarActivity extends AppCompatActivity {
+
 
     private EditText nomeCrianca,dataNascimento;
     private RadioButton rbBoy,rbGirl;
     private Button btnAdd;
+    private Button deleteBtn;
+
     private Criança criança;
-    private BAPI bapi;
+    private DBUpdate db;
     private DBUpdate dbUpdate;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nova_crianca);
+        setContentView(R.layout.activity_criancas_editar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         dbUpdate = new DBUpdate(getApplicationContext());
@@ -51,6 +55,19 @@ public class novaCriancaActivity extends AppCompatActivity {
         rbBoy = (RadioButton)findViewById(R.id.novaCrianca_rbBoy);
         rbGirl = (RadioButton)findViewById(R.id.novaCrianca_rbGirl);
         btnAdd = (Button)findViewById(R.id.novaCrianca_btnAdd);
+        deleteBtn = (Button)findViewById(R.id.removerBtn);
+
+        intent = getIntent();
+
+        nomeCrianca.setText(intent.getStringExtra("nome"));
+        dataNascimento.setText(intent.getStringExtra("dataNascimento"));
+        if(intent.getStringExtra("sexo").contains(Sexo.MASCULINO))
+        {
+            rbBoy.setChecked(true);
+        }else
+            {
+                rbGirl.setChecked(true);
+            }
 
         dataNascimento.addTextChangedListener(Mask.insert("##/##/####",dataNascimento));
 
@@ -74,21 +91,26 @@ public class novaCriancaActivity extends AppCompatActivity {
             }
         });
 
-       btnAdd.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(nomeCrianca.length() > 0)
-               {
-                   boolean dataValida = true;
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(nomeCrianca.length() > 0)
+                {
+                    boolean dataValida = true;
 
-                   Date dateNascimento = new Date();
-                   DateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
-                   try {
-                       dateNascimento = sf.parse(dataNascimento.getText().toString());
-                   } catch (ParseException e) {
-                      dataValida = false;
-                       Log.e("dataParse: ",e.toString());
-                   }
+                    Date dateNascimento = new Date();
+                    DateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        dateNascimento = sf.parse(dataNascimento.getText().toString());
+                        if(dateNascimento.getMonth()==0 || dateNascimento.getDay() == 0 || dateNascimento.getYear() < 1 || dateNascimento.getYear() > new Date(System.currentTimeMillis()).getYear())
+                        {
+                            dataValida = false;
+                        }
+
+                    } catch (ParseException e) {
+                        dataValida = false;
+                        Log.e("dataParse: ",e.toString());
+                    }
 
                     if(dataValida)
                     {
@@ -103,37 +125,62 @@ public class novaCriancaActivity extends AppCompatActivity {
                             }
                             else
                             {criança.setSexo(Sexo.FEMININO);}
-
-                            bapi = new BAPI();
-
-                            if(dbUpdate.addCrianca(criança,new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))))
+                            int cod = intent.getIntExtra("cod",0);
+                            if(cod > 0)
                             {
-                                finish();
-                            }
-                            //if(bapi.cadastrarCriança(criança,new Usuário(getSharedPreferences(PrefsTitles.prefsName, Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).isSucesso())
-                            //{
-                             //   finish();
-                           // }
-                            else
+                                criança.setCod(cod);
+                                if(dbUpdate.updateCrianca(criança,new Usuário(getSharedPreferences(PrefsTitles.prefsName, Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))))
+                                {
+                                    finish();
+                                }
+                                else
                                 {
                                     sendErro(getResources().getString(R.string.falha),btnAdd);
                                 }
-                        }else
-                            {
-                                sendErro(getResources().getString(R.string.escolherSexoCriança),btnAdd);
+
                             }
+                            //if(bapi.cadastrarCriança(criança,new Usuário(getSharedPreferences(PrefsTitles.prefsName, Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).isSucesso())
+                            //{
+                            //   finish();
+                            // }
+                            else
+                            {
+                                sendErro(getResources().getString(R.string.falha),btnAdd);
+                            }
+                        }else
+                        {
+                            sendErro(getResources().getString(R.string.escolherSexoCriança),btnAdd);
+                        }
 
                     }else
-                        {
-                            sendErro(getResources().getString(R.string.dataNascimentoInvalida),dataNascimento);
-                        }
-               }
-               else
+                    {
+                        sendErro(getResources().getString(R.string.dataNascimentoInvalida),dataNascimento);
+                    }
+                }
+                else
+                {
+                    sendErro(getResources().getString(R.string.criancaNomeVazio),nomeCrianca);
+                }
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int cod = getIntent().getIntExtra("cod",0);
+                Log.e("onClick: "," "+cod);
+                db = new DBUpdate(getApplicationContext());
+            if(db.deleteCrianca(cod))
+               {
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.deleteSucesso),Toast.LENGTH_LONG).show();
+                   finish();
+               }else
                    {
-                       sendErro(getResources().getString(R.string.criancaNomeVazio),nomeCrianca);
+                       Toast.makeText(getApplicationContext(),getResources().getString(R.string.deleteFalha),Toast.LENGTH_LONG).show();
                    }
-           }
-       });
+
+            }
+        });
 
     }
     private void sendErro(String msgErro,View view)

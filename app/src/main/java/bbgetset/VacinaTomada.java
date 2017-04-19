@@ -12,6 +12,8 @@ public class VacinaTomada {
     private Date data;
     private Date validade;
     private String localTomado;
+    private int criancaCod;
+    private int vacinaCod;
 
     public VacinaTomada()
     {
@@ -59,5 +61,21 @@ public class VacinaTomada {
 
     public void setLocalTomado(String localTomado) {
         this.localTomado = localTomado;
+    }
+
+    public int getCriancaCod() {
+        return criancaCod;
+    }
+
+    public void setCriancaCod(int criancaCod) {
+        this.criancaCod = criancaCod;
+    }
+
+    public int getVacinaCod() {
+        return vacinaCod;
+    }
+
+    public void setVacinaCod(int vacinaCod) {
+        this.vacinaCod = vacinaCod;
     }
 }

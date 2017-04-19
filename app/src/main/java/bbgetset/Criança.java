@@ -1,5 +1,6 @@
 package bbgetset;
 
+import android.util.Log;
 import android.widget.DatePicker;
 
 import java.sql.Time;
@@ -16,42 +17,61 @@ import java.util.Timer;
 
 public class Criança {
 
-    private int idade = 0;
+    private String idade;
     private String nome;
     private Date dataNascimento;
     private ArrayList<VacinaTomada> vacinasTomadas;
     private String[] notificações;
-    private Sexo sexo;
+    private String sexo;
+    private int cod;
+    private int old;
 
     public Criança()
     {
         vacinasTomadas = new ArrayList<VacinaTomada>();
         notificações = new String[]{"nenhuma"};
-        sexo = new Sexo();
-        sexo.setMasculino();
+        sexo = "";
     }
 
-    public int getIdade() {
+    public String getIdadeString() {
+         old = 0;
         try{
-            int anoNascimento = dataNascimento.getYear();
+            int anoNascimento = dataNascimento.getYear() +1900;
             int mesNascimento = dataNascimento.getMonth();
             int diaNascimento = dataNascimento.getDay();
 
             Date date = new Date(System.currentTimeMillis());
-            int anoAtual = date.getYear();
+            int anoAtual = date.getYear()+1900;
             int mesAtual = date.getMonth();
             int diaAtual = date.getDay();
 
-            idade = anoAtual - anoNascimento;
+
+            old = anoAtual - anoNascimento;
             if(mesAtual < mesNascimento)
             {
-                idade--;
+                old--;
             }
             else if(mesAtual == mesNascimento){
                 if(diaAtual < diaNascimento)
                 {
-                    idade--;
+                    old--;
                 }
+            }
+
+            if(old < 1)
+            {
+                if(mesAtual > mesNascimento)
+                {
+                    old = mesAtual - mesNascimento;
+                    idade = old + " meses de idade";
+                }else
+                    {
+                        if(diaAtual > diaNascimento)
+                        {
+                            old = diaAtual - diaNascimento;
+                            idade = old + " dias";
+                        }
+                    }
             }
             return idade;
 
@@ -59,6 +79,58 @@ public class Criança {
         {
             return idade;
         }
+    }
+    public int getAnosIdade()
+    {
+        old = 0;
+            int anoNascimento = dataNascimento.getYear() +1900;
+            int mesNascimento = dataNascimento.getMonth();
+            int diaNascimento = dataNascimento.getDay();
+
+            Date date = new Date(System.currentTimeMillis());
+            int anoAtual = date.getYear()+1900;
+            int mesAtual = date.getMonth();
+            int diaAtual = date.getDay();
+
+
+            old = anoAtual - anoNascimento;
+            if(mesAtual < mesNascimento)
+            {
+                old--;
+            }
+            else if(mesAtual == mesNascimento){
+                if(diaAtual < diaNascimento)
+                {
+                    old--;
+                }
+            }
+        return old;
+    }
+    public int getMesesIdade()
+    {
+            old = 0;
+            int anoNascimento = dataNascimento.getYear() +1900;
+            int mesNascimento = dataNascimento.getMonth();
+            int diaNascimento = dataNascimento.getDay();
+
+            Date date = new Date(System.currentTimeMillis());
+            int anoAtual = date.getYear()+1900;
+            int mesAtual = date.getMonth();
+            int diaAtual = date.getDay();
+
+
+            old = anoAtual - anoNascimento;
+            if(mesAtual < mesNascimento)
+            {
+                old--;
+            }
+            else if(mesAtual == mesNascimento){
+                if(diaAtual < diaNascimento)
+                {
+                    old--;
+                }
+            }
+            return old;
     }
 
     public String getNome() {
@@ -71,6 +143,26 @@ public class Criança {
 
     public Date getDataNascimento() {
         return dataNascimento;
+    }
+    public String getDataNascimentoString()
+    {
+        String data;
+        Date d = getDataNascimento();
+        String dia,mes,ano;
+        if(d.getDay() < 10)
+        {
+            dia = "0"+d.getDay();
+        }else{dia = String.valueOf(d.getDay());}
+        if(d.getMonth() < 10)
+        {
+            mes = "0"+d.getDay();
+        }else{mes = String.valueOf(d.getMonth());}
+
+        ano = String.valueOf(d.getYear()+1900);
+
+        data = dia+"/"+mes+"/"+ano;
+
+        return data;
     }
 
     public void setDataNascimento(Date dataNascimento) {
@@ -93,12 +185,19 @@ public class Criança {
         this.notificações = notificações;
     }
 
-    public Sexo getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(Sexo sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
+    }
 }

@@ -7,7 +7,7 @@
     android:background="@color/BackGray"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.evar.babadigital.novaCriancaActivity"
-    tools:showIn="@layout/activity_nova_crianca">
+    tools:showIn="@layout/activity_criancas_editar">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -178,16 +178,30 @@
             android:layout_height="match_parent"
             android:layout_weight="12"
             android:gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/removerBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"
+                android:text="@string/apagar"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/novaCrianca_btnAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:background="@color/menuCorSecundaria"
                 android:gravity="center"
-                android:text="@string/adicionar"
+                android:text="@string/salvar"
                 android:textColor="@android:color/background_light"
                 android:textSize="24sp"
                 android:textStyle="bold" />
