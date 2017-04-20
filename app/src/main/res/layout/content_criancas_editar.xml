@@ -52,6 +52,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@android:drawable/editbox_background_normal"
+            android:capitalize="words"
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/secondary_text_material_light"

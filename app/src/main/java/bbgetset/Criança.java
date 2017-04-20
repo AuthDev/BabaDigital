@@ -37,13 +37,13 @@ public class Criança {
          old = 0;
         try{
             int anoNascimento = dataNascimento.getYear() +1900;
-            int mesNascimento = dataNascimento.getMonth();
-            int diaNascimento = dataNascimento.getDay();
+            int mesNascimento = dataNascimento.getMonth()+1;
+            int diaNascimento = dataNascimento.getDate();
 
             Date date = new Date(System.currentTimeMillis());
             int anoAtual = date.getYear()+1900;
-            int mesAtual = date.getMonth();
-            int diaAtual = date.getDay();
+            int mesAtual = date.getMonth()+1;
+            int diaAtual = date.getDate();
 
 
             old = anoAtual - anoNascimento;
@@ -66,13 +66,22 @@ public class Criança {
                     idade = old + " meses de idade";
                 }else
                     {
-                        if(diaAtual > diaNascimento)
-                        {
-                            old = diaAtual - diaNascimento;
-                            idade = old + " dias";
-                        }
+                        if(mesAtual < mesNascimento) {
+                            old = (12 - mesNascimento) + mesAtual;
+                            idade = old + " meses de idade";
+
+                        }else
+                            {
+                                if (diaAtual > diaNascimento) {
+                                    old = diaAtual - diaNascimento;
+                                    idade = old + " dias";
+                                }
+                            }
                     }
-            }
+            }else
+                {
+                    idade = old +" anos de idade";
+                }
             return idade;
 
         }catch (Exception e)
@@ -84,13 +93,13 @@ public class Criança {
     {
         old = 0;
             int anoNascimento = dataNascimento.getYear() +1900;
-            int mesNascimento = dataNascimento.getMonth();
-            int diaNascimento = dataNascimento.getDay();
+            int mesNascimento = dataNascimento.getMonth()+1;
+            int diaNascimento = dataNascimento.getDate();
 
             Date date = new Date(System.currentTimeMillis());
             int anoAtual = date.getYear()+1900;
-            int mesAtual = date.getMonth();
-            int diaAtual = date.getDay();
+            int mesAtual = date.getMonth()+1;
+            int diaAtual = date.getDate();
 
 
             old = anoAtual - anoNascimento;
@@ -108,29 +117,39 @@ public class Criança {
     }
     public int getMesesIdade()
     {
-            old = 0;
-            int anoNascimento = dataNascimento.getYear() +1900;
-            int mesNascimento = dataNascimento.getMonth();
-            int diaNascimento = dataNascimento.getDay();
+            int mes = 0;
+            int mesNascimento = dataNascimento.getMonth()+1;
 
             Date date = new Date(System.currentTimeMillis());
-            int anoAtual = date.getYear()+1900;
-            int mesAtual = date.getMonth();
-            int diaAtual = date.getDay();
+            int mesAtual = date.getMonth()+1;
 
+            mes += getAnosIdade()*12;
 
-            old = anoAtual - anoNascimento;
             if(mesAtual < mesNascimento)
             {
-                old--;
-            }
-            else if(mesAtual == mesNascimento){
-                if(diaAtual < diaNascimento)
+                mes = 12-mesNascimento+mesAtual;
+            }else
                 {
-                    old--;
+                    if(mesAtual == mesNascimento)
+                    {
+                       return mes;
+                    }else
+                        {
+                            mes = mesAtual - mesNascimento;
+                        }
                 }
-            }
-            return old;
+
+
+            return mes;
+    }
+    public int getDiasNascimento()
+    {
+        int dia = 0;
+        Date date = new Date(System.currentTimeMillis());
+        int diaAtual = date.getDate();
+
+        dia += dia *getMesesIdade()+diaAtual;
+        return  dia;
     }
 
     public String getNome() {
@@ -149,14 +168,14 @@ public class Criança {
         String data;
         Date d = getDataNascimento();
         String dia,mes,ano;
-        if(d.getDay() < 10)
+        if(d.getDate() < 10)
         {
-            dia = "0"+d.getDay();
-        }else{dia = String.valueOf(d.getDay());}
-        if(d.getMonth() < 10)
+            dia = "0"+d.getDate();
+        }else{dia = String.valueOf(d.getDate());}
+        if((d.getMonth()+1) < 10)
         {
-            mes = "0"+d.getDay();
-        }else{mes = String.valueOf(d.getMonth());}
+            mes = "0"+(d.getMonth()+1);
+        }else{mes = String.valueOf(d.getMonth()+1);}
 
         ano = String.valueOf(d.getYear()+1900);
 

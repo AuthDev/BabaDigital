@@ -16,6 +16,7 @@ public class Noticia {
     private Date data;
     private String fonte;
     private String srcImagem;
+    private Bitmap bitmap;
 
     public String getTitulo() {
         return titulo;
@@ -58,10 +59,26 @@ public class Noticia {
     }
 
     public String getImagem() {
-        return srcImagem;
+        return getSrcImagem();
     }
 
     public void setImagem(String srcImagem) {
+        this.setSrcImagem(srcImagem);
+    }
+
+    public String getSrcImagem() {
+        return srcImagem;
+    }
+
+    public void setSrcImagem(String srcImagem) {
         this.srcImagem = srcImagem;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

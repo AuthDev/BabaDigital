@@ -119,9 +119,9 @@
     <string name="qt">0</string>
     <string name="notificacoes">Notificações :</string>
     <string name="criancass">Crianças</string>
-    <string name="textCriancas">Veja aqui suas crianças cadastradas. Você pode editar,adcionar ou remover.</string>
+    <string name="textCriancas">Veja aqui suas noticias cadastradas. Você pode editar,adcionar ou remover.</string>
     <string name="caderneta">Caderneta</string>
-    <string name="cadernetaText">Gerencie as vacinas de suas crianças.</string>
+    <string name="cadernetaText">Gerencie as vacinas de suas noticias.</string>
     <string name="informacoes">Informações</string>
     <string name="informacoesText">Leia informacões sobre vacinas e onde podem ser encontradas.</string>
     <string name="noticias">Notícias</string>
@@ -169,6 +169,7 @@
     <string name="cadastro_erroCampoConfirmarSenhaVazio">O campo confirmar senha está vazio</string>
     <string name="cadastradoSucesso">Cadastrado com sucesso!</string>
     <string name="falha">Falha</string>
+    <string name="falhaConexao">Falha na conexão</string>
     <string name="emailExist">Email já existe!</string>
     <string name="sair">Sair</string>
     <string name="configConta">Conta</string>
@@ -294,5 +295,6 @@
     <string name="title_activity_criancas_editar">Editar Criança</string>
     <string name="apagar">Apagar</string>
     <string name="salvar">Salvar</string>
+    <string name="showNotifications">Mostrar notificações</string>
 
 </resources>

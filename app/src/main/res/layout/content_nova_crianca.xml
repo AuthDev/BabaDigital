@@ -52,6 +52,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@android:drawable/editbox_background_normal"
+            android:capitalize="words"
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/secondary_text_material_light"
@@ -194,5 +195,19 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="horizontal" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline2"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="vertical" />
 
 </android.support.constraint.ConstraintLayout>

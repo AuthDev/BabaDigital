@@ -13,6 +13,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.evar.babadigital.CRUD.DBRead;
+
+import java.util.ArrayList;
+
+import bbgetset.Criança;
 import bbgetset.Usuário;
 
 public class InicioActivity extends AppCompatActivity {
@@ -24,7 +29,8 @@ public class InicioActivity extends AppCompatActivity {
     private LinearLayout btnCaderneta;
     private LinearLayout btnNoticias;
     private LinearLayout btnInformacoes;
-    private LinearLayout btnConfiguracoes;;
+    private LinearLayout btnConfiguracoes;
+    DBRead dbRead;
 
 
     @Override
@@ -33,6 +39,8 @@ public class InicioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        dbRead = new DBRead(getApplicationContext());
+        int qtOfCriancas = dbRead.getCrianças(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).size();
 
         nomeCompleto = (TextView)findViewById(R.id.inicio_nomeCompleto);
         criançasQt = (TextView)findViewById(R.id.inicio_criancasQt);
@@ -51,6 +59,8 @@ public class InicioActivity extends AppCompatActivity {
         btnInformacoes = (LinearLayout)findViewById(R.id.inicio_informacoes);
         btnNoticias = (LinearLayout)findViewById(R.id.inicio_noticias);
         btnConfiguracoes = (LinearLayout)findViewById(R.id.inicio_configuracoes);
+
+        criançasQt.setText(" "+qtOfCriancas);
 
 
         btnCriancas.setOnClickListener(new View.OnClickListener() {
@@ -122,5 +132,15 @@ public class InicioActivity extends AppCompatActivity {
             finish();
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+
+        dbRead = new DBRead(getApplicationContext());
+        int qtOfCriancas = dbRead.getCrianças(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).size();
+
+        criançasQt.setText(""+qtOfCriancas);
+        super.onResume();
     }
 }

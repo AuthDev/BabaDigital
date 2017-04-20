@@ -83,12 +83,23 @@ public class novaCriancaActivity extends AppCompatActivity {
 
                    Date dateNascimento = new Date();
                    DateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
+                   if(dataNascimento.getText().toString().length()!= 10)
+                   {
+                       sendErro(getResources().getString(R.string.dataNascimentoInvalida),dataNascimento);
+                       return;
+                   }
+                   Log.e("Nascimento Digitada: ", dataNascimento.getText().toString());
                    try {
                        dateNascimento = sf.parse(dataNascimento.getText().toString());
                    } catch (ParseException e) {
                       dataValida = false;
                        Log.e("dataParse: ",e.toString());
+                       sendErro(getResources().getString(R.string.dataNascimentoInvalida),dataNascimento);
+                       return;
                    }
+                   Log.e("Nascimento Digitada2: ",dateNascimento.getDay()+"/"+dateNascimento.getMonth()+"/"+dateNascimento.getYear());
+                   Log.e("Nascimento Digitada3: ",dateNascimento.getTime()+" "+dateNascimento.getDate()+" "+dateNascimento.getTimezoneOffset());
+                   Log.e("Nascimento Digitada4: "," "+dateNascimento.toGMTString());
 
                     if(dataValida)
                     {

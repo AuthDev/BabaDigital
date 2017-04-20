@@ -3,16 +3,25 @@ package bbgetset;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
+import android.provider.DocumentsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.evar.babadigital.PrefsTitles;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -197,43 +206,119 @@ public class BAPI{
         return crianças;
     }
 
+
+
     public ArrayList<Noticia> getNoticias() {
         noticias = new ArrayList<Noticia>();
+
         bdFabGet = new BDFabGet();
         String result;
         result = bdFabGet.sentGet("getNoticias","news=news");
+
+        JSONArray array;
+        Noticia noticia;
+        Elements dElements;
+        InputStream input;
+        Bitmap bitmap;
+
         try {
+            array = new JSONArray(result);
+            JSONObject jsonObject;
+            for (int i = 0; i < array.length(); i++) {
+                jsonObject = array.getJSONObject(i);
+                Document document = Jsoup.connect(jsonObject.getString("link")).get();
+                noticia = new Noticia();
+                dElements = document.select("meta[property=\"og:title\"]");
+                noticia.setTitulo(dElements.attr("content"));
+                Log.i("noticias title: ",noticia.getTitulo());
+                dElements = document.select("meta[property=\"og:description\"]");
+                noticia.setConteudo(dElements.attr("content"));
+                noticia.setFonte(jsonObject.getString("link"));
+                dElements = document.select("meta[property=\"og:site_name\"]");
+                noticia.setAutor(dElements.attr("content"));
+                dElements = document.select("meta[property=\"og:image\"]");
+                noticia.setSrcImagem(dElements.attr("content"));
 
-            JSONArray jsNoticias = new JSONArray(result);
-            Noticia noticia = new Noticia();
+                try {
+                    input = new  java.net.URL(noticia.getSrcImagem()).openStream();
+                    bitmap = BitmapFactory.decodeStream(input);
+                    noticia.setBitmap(bitmap);
+                }catch (Exception e)
+                {
 
-            for (int i = 0; i < jsNoticias.length(); i++) {
-
-                noticia.setAutor(jsNoticias.getJSONObject(i).getString("autor"));
-
-                noticia.setConteudo(jsNoticias.getJSONObject(i).getString("conteudo"));
-
-                SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
-                Date data = fs.parse(jsNoticias.getJSONObject(i).getString("data"));
-                noticia.setData(data);
-
-                noticia.setFonte(jsNoticias.getJSONObject(i).getString("fonte"));
-
-                noticia.setTitulo(jsNoticias.getJSONObject(i).getString("titulo"));
-
-                noticia.setImagem(jsNoticias.getJSONObject(i).getString("imagem"));
-
-                noticias.add(i,noticia);
+                }
+                noticias.add(noticia);
             }
 
-
-
-        }catch (Exception e)
-        {
-            Log.e("getNoticias :", e.toString() );
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
         return noticias;
     }
+
+    public Noticia getNoticia(int position,JSONArray jsonArrayNoticias) {
+        Noticia noticia = new Noticia();
+
+        JSONArray array;
+        Elements dElements;
+        InputStream input;
+        Bitmap bitmap;
+
+        try {
+            array = jsonArrayNoticias;
+            JSONObject jsonObject;
+            jsonObject = array.getJSONObject(position);
+            Document document = Jsoup.connect(jsonObject.getString("link")).get();
+            noticia = new Noticia();
+            dElements = document.select("meta[property=\"og:title\"]");
+            noticia.setTitulo(dElements.attr("content"));
+            Log.i("noticias title: ", noticia.getTitulo());
+            dElements = document.select("meta[property=\"og:description\"]");
+            noticia.setConteudo(dElements.attr("content"));
+            noticia.setFonte(jsonObject.getString("link"));
+            dElements = document.select("meta[property=\"og:site_name\"]");
+            noticia.setAutor(dElements.attr("content"));
+            dElements = document.select("meta[property=\"og:image\"]");
+            noticia.setSrcImagem(dElements.attr("content"));
+
+            try {
+                input = new java.net.URL(noticia.getSrcImagem()).openStream();
+                bitmap = BitmapFactory.decodeStream(input);
+                noticia.setBitmap(bitmap);
+            } catch (Exception e) {
+
+            }
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    return noticia;
+
+    }
+
+    public JSONArray getJsonNoticias() {
+        Noticia noticia = new Noticia();
+
+
+        bdFabGet = new BDFabGet();
+        String result;
+        result = bdFabGet.sentGet("getNoticias", "news=news");
+
+        JSONArray array = new JSONArray();
+        try {
+            array = new JSONArray(result);
+
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+     return array;
+
+    }
+
 
     public List<Vacina> getVacinas() {
 

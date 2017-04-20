@@ -54,7 +54,7 @@ public class WebPG {
     {
         String result =  get("http://clinica28dejulho.com.br/app/babadigital/status.php");
         Log.d("Result: ",result);
-        if(result.contains("on"))
+        if(result.length() > 0)
         {
             return true;
         }

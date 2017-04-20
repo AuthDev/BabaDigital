@@ -153,7 +153,7 @@ public class CadastroActivity extends AppCompatActivity {
                         campoErrado(editCelular,getResources().getString(R.string.cadastro_erroCelularVazio));
                         return;
                     }
-                if(editDataNascimento.getText().length() > 9)
+                if(editDataNascimento.getText().length() == 10)
                 {
                     try {
                         DateFormat fs = new SimpleDateFormat("dd/MM/yyyy");

@@ -18,5 +18,6 @@ public class PrefsTitles {
     public static final String jsNoticias = "jsNoticias";
     public static Usuário us;
     public static final String prefsName = "babadigital";
+    public static final String NOTIFICACOES="notificações";
 
 }

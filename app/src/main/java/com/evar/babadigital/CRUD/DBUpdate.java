@@ -55,27 +55,9 @@ public class DBUpdate extends SQLiteOpenHelper{
         openDB();
         ContentValues values = new ContentValues();
         values.put("nome",criança.getNome());
-        Date d = criança.getDataNascimento();
-        //Setando Data de Nascimento Criança
-        String dia,mes,ano;
-        if(d.getDay() < 10)
-        {
-            dia = "0"+d.getDay();
-        }else
-            {
-                dia = String.valueOf(d.getDay());
-            }
-        if(d.getMonth() < 10)
-        {
-            mes = "0"+d.getMonth();
-        }else
-        {
-            mes = String.valueOf(d.getMonth());
-        }
 
-        ano = String.valueOf(d.getYear()+1900);
 
-        values.put("dataNascimento",dia+"/"+mes+"/"+ano);
+        values.put("dataNascimento",criança.getDataNascimentoString());
 
 
         values.put("sexo",criança.getSexo().toString());

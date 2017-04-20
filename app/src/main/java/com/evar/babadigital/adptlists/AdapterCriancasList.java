@@ -89,7 +89,7 @@ public class AdapterCriancasList extends RecyclerView.Adapter<AdapterCriancasLis
     public void onBindViewHolder(AdapterCriancasList.ViewHolder holder, int position) {
 
         holder.nome.setText(crianças.get(position).getNome());
-        holder.idade.setText(crianças.get(position).getIdade()+" anos de idade");
+        holder.idade.setText(crianças.get(position).getIdadeString());
 
         if(crianças.get(position).getSexo().contains(Sexo.MASCULINO))
         {

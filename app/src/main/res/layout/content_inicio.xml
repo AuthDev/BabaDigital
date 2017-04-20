@@ -64,7 +64,7 @@
                     android:text="@string/nomeUsuario"
                     android:textAlignment="viewStart"
                     android:textColor="@color/secondary_text_material_light"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
