@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -56,6 +55,7 @@ public class CriancasEditarActivity extends AppCompatActivity {
         rbGirl = (RadioButton)findViewById(R.id.novaCrianca_rbGirl);
         btnAdd = (Button)findViewById(R.id.novaCrianca_btnAdd);
         deleteBtn = (Button)findViewById(R.id.removerBtn);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         intent = getIntent();
 
@@ -102,14 +102,9 @@ public class CriancasEditarActivity extends AppCompatActivity {
                     DateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         dateNascimento = sf.parse(dataNascimento.getText().toString());
-                        if(dateNascimento.getMonth()==0 || dateNascimento.getDay() == 0 || dateNascimento.getYear() < 1 || dateNascimento.getYear() > new Date(System.currentTimeMillis()).getYear())
-                        {
-                            dataValida = false;
-                        }
 
                     } catch (ParseException e) {
                         dataValida = false;
-                        Log.e("dataParse: ",e.toString());
                     }
 
                     if(dataValida)
@@ -131,6 +126,7 @@ public class CriancasEditarActivity extends AppCompatActivity {
                                 criança.setCod(cod);
                                 if(dbUpdate.updateCrianca(criança,new Usuário(getSharedPreferences(PrefsTitles.prefsName, Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))))
                                 {
+                                    PrefsTitles.novaNot = true;
                                     finish();
                                 }
                                 else
@@ -168,7 +164,6 @@ public class CriancasEditarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                int cod = getIntent().getIntExtra("cod",0);
-                Log.e("onClick: "," "+cod);
                 db = new DBUpdate(getApplicationContext());
             if(db.deleteCrianca(cod))
                {

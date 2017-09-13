@@ -10,9 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -45,6 +43,7 @@ public class NoticiasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_noticias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         handler = new Handler();
         noticias = new ArrayList<Noticia>();
 
@@ -54,6 +53,8 @@ public class NoticiasActivity extends AppCompatActivity {
         listNoticias.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         listNoticias.setLayoutManager(layoutManager);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(StaticoInstanciados.isNoticiasOn)
         {
@@ -85,7 +86,7 @@ public class NoticiasActivity extends AppCompatActivity {
                 public void run() {
                     Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha),Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.GONE);
-                    getSupportActionBar().setTitle(getResources().getString(R.string.noticias)+" ("+ getResources().getString(R.string.falhaConexao)+")!");
+                    getSupportActionBar().setTitle("Noticias"+" ("+ getResources().getString(R.string.falhaConexao)+")!");
                 }
             });
         }
@@ -155,7 +156,6 @@ public class NoticiasActivity extends AppCompatActivity {
 
                         } else {
                             carregar(true);
-                            Log.e("getNotiias: ", "Nada de noticias");
                         }
 
 

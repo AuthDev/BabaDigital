@@ -1,21 +1,17 @@
 package bbgetset;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
-import android.provider.DocumentsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.evar.babadigital.PrefsTitles;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -27,8 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.prefs.Preferences;
+
+import webdo.WebPG;
 
 /**
  * Created by evar on 23/03/17.
@@ -39,7 +35,7 @@ public class BAPI{
     private Usuário usuário;
     private ArrayList<Criança> crianças;
     private ArrayList<Noticia> noticias;
-    private List<Vacina> vacinas;
+    private ArrayList<Vacina> vacinas;
     private Vacina vacina;
     BDFabGet bdFabGet;
     private AppCompatActivity activity;
@@ -102,9 +98,9 @@ public class BAPI{
                     vacina = new Vacina();
 
                     vacina.setNome(jsVacinasTomadas.getJSONObject(j).getString("nome"));
-                    vacina.setInformaçao(jsVacinasTomadas.getJSONObject(j).getString("informaçao"));
-                    vacina.setVacinaIdade("10 - 20");
-                    vacinaTomada.setVacina(vacina);
+                    vacina.setDescricao(jsVacinasTomadas.getJSONObject(j).getString("informaçao"));
+                  //  vacina.setVacinaIdade("10 - 20");
+                //    vacinaTomada.setVacina(vacina);
 
                     // Set data
                     SimpleDateFormat fs =  new SimpleDateFormat("dd/mm/yyyy");
@@ -122,7 +118,6 @@ public class BAPI{
             }
         }catch (Exception e)
         {
-            Log.e("getCriança :", e.toString() );
         }
 
         return crianças;
@@ -174,15 +169,15 @@ public class BAPI{
                     vacina = new Vacina();
 
                     vacina.setNome(jsVacinasTomadas.getJSONObject(j).getString("nome"));
-                    vacina.setInformaçao(jsVacinasTomadas.getJSONObject(j).getString("informaçao"));
+                    vacina.setDescricao(jsVacinasTomadas.getJSONObject(j).getString("informaçao"));
                     VacinaIdade vacinaIdade = new VacinaIdade();
                     JSONArray jsVacinaIdades = jsVacinasTomadas.getJSONArray(j).getJSONArray(j);
 
                     for (int k = 0; k < jsVacinaIdades.length(); k++) {
                         vacinaIdade.add(jsVacinaIdades.getInt(k));
                     }
-                    vacina.setVacinaIdade(jsVacinasTomadas.getJSONObject(0).getString("vacinaIdade"));
-                    vacinaTomada.setVacina(vacina);
+               //     vacina.setVacinaIdade(jsVacinasTomadas.getJSONObject(0).getString("vacinaIdade"));
+         //           vacinaTomada.setVacina(vacina);
 
                     // Set data
                     SimpleDateFormat fs =  new SimpleDateFormat("dd/mm/yyyy");
@@ -200,7 +195,6 @@ public class BAPI{
             }
         }catch (Exception e)
         {
-            Log.e("getCriança :", e.toString() );
         }
 
         return crianças;
@@ -230,7 +224,6 @@ public class BAPI{
                 noticia = new Noticia();
                 dElements = document.select("meta[property=\"og:title\"]");
                 noticia.setTitulo(dElements.attr("content"));
-                Log.i("noticias title: ",noticia.getTitulo());
                 dElements = document.select("meta[property=\"og:description\"]");
                 noticia.setConteudo(dElements.attr("content"));
                 noticia.setFonte(jsonObject.getString("link"));
@@ -275,7 +268,6 @@ public class BAPI{
             noticia = new Noticia();
             dElements = document.select("meta[property=\"og:title\"]");
             noticia.setTitulo(dElements.attr("content"));
-            Log.i("noticias title: ", noticia.getTitulo());
             dElements = document.select("meta[property=\"og:description\"]");
             noticia.setConteudo(dElements.attr("content"));
             noticia.setFonte(jsonObject.getString("link"));
@@ -320,26 +312,47 @@ public class BAPI{
     }
 
 
-    public List<Vacina> getVacinas() {
+    public ArrayList<Vacina> getVacinas() {
 
         vacinas = new ArrayList<Vacina>();
         vacina = new Vacina();
+        bdFabGet = new BDFabGet();
         String result = bdFabGet.sentGet("getVacinas","vacinas=vacinas");
         try {
-            JSONObject jsVacinas = new JSONObject(result);
+            JSONArray jsVacinas = new JSONArray(result);
+            JSONObject jsonObject;
             for (int i = 0; i < jsVacinas.length(); i++) {
+                jsonObject = jsVacinas.getJSONObject(i);
 
-                vacina.setNome(jsVacinas.getString("nome"));
+                vacina = new Vacina();
+                vacina.setNome(jsonObject.getString("vacina"));
+
+                if(jsonObject.getInt("particular") == 1){
+                    vacina.setParticular(true);
+                } else {
+                    vacina.setParticular(false);
+                }
 
 
+                if(jsonObject.getInt("publica") == 1)
+                {
+                    vacina.setPublica(true);
+                }else{
+                    vacina.setPublica(false);
+                }
 
-                vacina.setVacinaIdade(jsVacinas.getString("vacinaIdade"));
+                vacina.setDescricao(jsonObject.getString("descricao"));
+                vacina.setIdade(jsonObject.getInt("idade"));
+                vacina.setDoses(jsonObject.getInt("dose"));
+                vacina.setIntervalo(jsonObject.getInt("intervalo"));
+                vacina.setCod(jsonObject.getInt("cod"));
+
                 vacinas.add(i,vacina);
             }
 
         }catch (Exception e)
         {
-
+            e.printStackTrace();
         }
         return vacinas;
     }
@@ -436,10 +449,24 @@ public class BAPI{
         if(usuário.isValidated())
         {
            if(!usuarioExist(usuário))
-           {    bdFabGet = new BDFabGet();
-               String dataNascimento = usuário.getDataNascimento().getDay()+"/"+usuário.getDataNascimento().getMonth()+"/"+usuário.getDataNascimento().getYear();
-               result = bdFabGet.sentGet("cadastrarUsuario","email="+usuário.getEmail()+"&senha="+senha+"&nome="+usuário.getNome()+ "&telefone="+usuário.getNumeroTelefone()+"&celular="+usuário.getNumeroCelular()+"&dataNascimento="+dataNascimento+"&rua="+usuário.getEndereço().getRua()+ "&bairro="+usuário.getEndereço().getBairro()+"&numeroCasa"+usuário.getEndereço().getNumeroCasa()+"&estado="+usuário.getEndereço().getEstado()+ "&pais=BR"+"&cidade+"+usuário.getEndereço().getCidade());
+           {
+               List<NameValuePair>valuePairs = new ArrayList<NameValuePair>();
+               valuePairs.add(new BasicNameValuePair("email",usuário.getEmail()));
+               valuePairs.add(new BasicNameValuePair("senha",senha));
+               valuePairs.add(new BasicNameValuePair("nome",usuário.getNome()));
+               valuePairs.add(new BasicNameValuePair("telefone",usuário.getNumeroTelefone()));
+               valuePairs.add(new BasicNameValuePair("celular",usuário.getNumeroCelular()));
+               valuePairs.add(new BasicNameValuePair("dataNascimento",usuário.dataNascimentoString()));
+               valuePairs.add(new BasicNameValuePair("rua",usuário.getEndereço().getRua()));
+               valuePairs.add(new BasicNameValuePair("bairro",usuário.getEndereço().getBairro()));
+               valuePairs.add(new BasicNameValuePair("numeroCasa",String.valueOf(usuário.getEndereço().getNumeroCasa())));
+               valuePairs.add(new BasicNameValuePair("cidade",usuário.getEndereço().getCidade()));
+               valuePairs.add(new BasicNameValuePair("estado",usuário.getEndereço().getEstado()));
+               valuePairs.add(new BasicNameValuePair("pais",usuário.getEndereço().getPaís()));
+               valuePairs.add(new BasicNameValuePair("cpf",usuário.getCPF()));
+
                try {
+                   result = WebPG.post("cadastrarUsuarioPOST",valuePairs);
                    JSONObject jsonObject = new JSONObject(result);
                    return jsonObject.getBoolean("sucess");
                }catch (Exception e)
@@ -459,8 +486,22 @@ public class BAPI{
         bdFabGet = new BDFabGet();
         boolean exist = false;
         String result;
-        Log.d("onClick: ",user.getEmail());
         result = bdFabGet.sentGet("usuarioExist","email="+user.getEmail());
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            exist = jsonObject.getBoolean("exist");
+        }catch (Exception e)
+        {
+
+        }
+        return exist;
+    }
+    public boolean usuarioExist(String email)
+    {
+        bdFabGet = new BDFabGet();
+        boolean exist = false;
+        String result;
+        result = bdFabGet.sentGet("usuarioExist","email="+email);
         try {
             JSONObject jsonObject = new JSONObject(result);
             exist = jsonObject.getBoolean("exist");

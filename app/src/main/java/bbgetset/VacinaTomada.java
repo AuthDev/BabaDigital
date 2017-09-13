@@ -6,37 +6,34 @@ import java.util.Date;
  * Created by evar on 23/03/17.
  */
 
-public class VacinaTomada {
+public class VacinaTomada extends Vacina {
 
-    private Vacina vacina;
     private Date data;
     private Date validade;
     private String localTomado;
     private int criancaCod;
-    private int vacinaCod;
+    private int dose;
+    private boolean isTomada;
+    private int vacinaTomadaCod;
+    private boolean personalizada;
 
     public VacinaTomada()
     {
-        vacina = new Vacina();
         data = new Date();
-        localTomado = "nunhum";
+        localTomado = "nenhum";
         validade = new Date();
     }
-
-    public VacinaTomada(Vacina vacina,Date data,Date validade,String localTomado)
+    public void setVacina(Vacina vacina)
     {
-        this.setVacina(vacina);
-        this.setData(data);
-        this.setValidade(validade);
-        this.setLocalTomado(localTomado);
-    }
+        setNome(vacina.getNome());
+        setDescricao(vacina.getDescricao());
+        setDoses(vacina.getDoses());
+        setIdade(vacina.getDias());
+        setParticular(vacina.isParticular());
+        setPublica(vacina.isPublica());
+        setIntervalo(vacina.getIntervalo());
+        setCod(vacina.getCod());
 
-    public Vacina getVacina() {
-        return vacina;
-    }
-
-    public void setVacina(Vacina vacina) {
-        this.vacina = vacina;
     }
 
     public Date getData() {
@@ -71,11 +68,57 @@ public class VacinaTomada {
         this.criancaCod = criancaCod;
     }
 
-    public int getVacinaCod() {
-        return vacinaCod;
+    public int getDose() {
+        return dose;
     }
 
-    public void setVacinaCod(int vacinaCod) {
-        this.vacinaCod = vacinaCod;
+    public void setDose(int dose) {
+        this.dose = dose;
+    }
+
+    public boolean isTomada() {
+        return isTomada;
+    }
+
+    public void setTomada(boolean tomada) {
+        isTomada = tomada;
+    }
+
+    public int getVacinaTomadaCod() {
+        return vacinaTomadaCod;
+    }
+
+    public void setVacinaTomadaCod(int vacinaTomadaCod) {
+        this.vacinaTomadaCod = vacinaTomadaCod;
+    }
+
+    public boolean isPersonalizada() {
+        return personalizada;
+    }
+
+    public void setPersonalizada(boolean personalizada) {
+        this.personalizada = personalizada;
+    }
+    public String dataString()
+    {
+        String data ="";
+        Date date = getData();
+        if(date.getDate() < 10)
+        {
+            data+="0"+date.getDate();
+        }else
+        {
+            data+= date.getDate();
+        }
+        if(date.getMonth() < 10)
+        {
+            data+="/0"+date.getMonth()+1;
+        }else
+        {
+            data+="/"+date.getMonth()+1;
+        }
+        data+="/"+(date.getYear()+1900);
+        return  data;
+
     }
 }

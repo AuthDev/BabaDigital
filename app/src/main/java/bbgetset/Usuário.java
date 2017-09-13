@@ -17,6 +17,7 @@ public class Usuário {
     private String nome;
     private String email;
     private String senha;
+    private String cpf;
     private String numeroCelular;
     private String numeroTelefone;
     private Date dataNascimento;
@@ -52,8 +53,15 @@ public class Usuário {
             }
 
             //Setar Endereço
-            Endereço endereço = new Endereço(jsonObject.getString("cidade"),jsonObject.getString("estado"),jsonObject.getString("rua"),jsonObject.getString("bairro"),jsonObject.getInt("numeroCasa"),jsonObject.getInt("cepNumber"),jsonObject.getString("pais"),jsonObject.getString("complemento"));
-            setEndereço(endereço);
+            try {
+                Endereço endereço = new Endereço(jsonObject.getString("cidade"),jsonObject.getString("estado"),jsonObject.getString("rua"),jsonObject.getString("bairro"),jsonObject.getInt("numeroCasa"),jsonObject.getInt("cepNumber"),jsonObject.getString("pais"),jsonObject.getString("complemento"));
+                setEndereço(endereço);
+
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
 
             //Set Nome
             setNome(jsonObject.getString("nome"));
@@ -214,8 +222,39 @@ public class Usuário {
         return jsonObject;
 
     }
+    public String dataNascimentoString()
+    {
+        String data ="";
+        Date date = getDataNascimento();
+        if(date.getDate() < 10)
+        {
+            data+="0"+date.getDate();
+        }else
+        {
+            data+= date.getDate();
+        }
+        if(date.getMonth() < 10)
+        {
+            data+="/0"+date.getMonth()+1;
+        }else
+        {
+            data+="/"+date.getMonth()+1;
+        }
+        data+="/"+(date.getYear()+1900);
+        return  data;
+
+    }
     public String toStringJson()
     {
         return stringJSON;
+    }
+
+
+    public String getCPF() {
+        return cpf;
+    }
+
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
     }
 }

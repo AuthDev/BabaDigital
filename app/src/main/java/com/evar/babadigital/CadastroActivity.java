@@ -1,17 +1,13 @@
 package com.evar.babadigital;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,7 +25,7 @@ import bbgetset.Usuário;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private EditText editNome,editEmail,editTelefone,editCelular,editDataNascimento,editRua,editBairro,editNumero,editCidade,editComplemento,editSenha,editConfirmarSenha;
+    private EditText editNome,editEmail,editTelefone,editCelular,editDataNascimento,editRua,editBairro,editNumero,editCidade,editComplemento,editSenha,editConfirmarSenha,editCpf;
     private Button btnRegistrar;
     private Spinner spinSexo,spinEstado;
     private String nome;
@@ -43,14 +39,13 @@ public class CadastroActivity extends AppCompatActivity {
     private String numero;
     private String cidade;
     private String complemento;
+    private LinearLayout progressCad;
+    private LinearLayout formCad;
+
 
     private Usuário usuário;
     private Endereço endereço;
     private BAPI bapi;
-
-    private String current = "";
-    private String ddmmyyyy = "DDMMYYYY";
-    private Calendar cal = Calendar.getInstance();
 
 
     @Override
@@ -59,6 +54,7 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editNome = (EditText)findViewById(R.id.cadastro_editNome);
         editEmail = (EditText)findViewById(R.id.cadastro_editEmail);
@@ -66,6 +62,7 @@ public class CadastroActivity extends AppCompatActivity {
         editCelular = (EditText)findViewById(R.id.cadastro_editCelular);
         editDataNascimento = (EditText)findViewById(R.id.cadastro_editDataNascimento);
         spinSexo = (Spinner)findViewById(R.id.cadastro_spinnerSexo);
+        editCpf = (EditText)findViewById(R.id.editCPF);
         editRua = (EditText)findViewById(R.id.cadastro_editRua);
         editBairro = (EditText)findViewById(R.id.cadastro_editBairro);
         editNumero = (EditText)findViewById(R.id.cadastro_editNumeroCasa);
@@ -75,11 +72,13 @@ public class CadastroActivity extends AppCompatActivity {
         btnRegistrar = (Button)findViewById(R.id.cadastro_btnRegistrar);
         editSenha = (EditText)findViewById(R.id.cadastro_editSenha);
         editConfirmarSenha = (EditText)findViewById(R.id.cadastro_editConfirmarSenha);
+        progressCad = (LinearLayout) findViewById(R.id.progressCad);
+        formCad = (LinearLayout)findViewById(R.id.formCad);
 
 
         try
         {
-            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.sexo,R.layout.spnner);
+            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.sexo,R.layout.spinner);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinSexo.setAdapter(arrayAdapter);
 
@@ -89,7 +88,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
         try
         {
-            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.estados,R.layout.spnner);
+            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.estados,R.layout.spinner);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinEstado.setAdapter(arrayAdapter);
             spinEstado.setSelection(4);
@@ -105,9 +104,13 @@ public class CadastroActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                formCad.setVisibility(View.INVISIBLE);
+                progressCad.setVisibility(View.VISIBLE);
                 bapi = new BAPI();
                 nome = editNome.getText().toString();
-                email = editEmail.getText().toString();
+                email = editEmail.getText().toString().toLowerCase();
                 senha = editSenha.getText().toString();
                 confirmarSenha = editConfirmarSenha.getText().toString();
                 celular = editCelular.getText().toString();
@@ -123,6 +126,11 @@ public class CadastroActivity extends AppCompatActivity {
                 if(email.length() > 0 && email.contains("@"))
                 {
                     usuário.setEmail(email);
+                    if(bapi.usuarioExist(email))
+                    {
+                        campoErrado(editEmail,getResources().getString(R.string.emailExist));
+                        return;
+                    }
                 }else
                 {
                     campoErrado(editEmail,getResources().getString(R.string.error_invalid_email));
@@ -182,6 +190,14 @@ public class CadastroActivity extends AppCompatActivity {
                 }
 
 
+                if(editCpf.getText().toString().length() > 0)
+                {
+                    usuário.setCPF(editCpf.getText().toString());
+                }else
+                    {
+                        campoErrado(editCpf,getResources().getString(R.string.cadastro_erroCPF));
+                        return;
+                    }
 
                 if(rua.length() > 0)
                 {
@@ -191,14 +207,15 @@ public class CadastroActivity extends AppCompatActivity {
                 {
                     endereço.setBairro(bairro);
                 }
-                if(numero.length() > 0)
-                {
-                    endereço.setNumeroCasa(Integer.valueOf(editNumero.getText().toString()));
-                }
+
                 if(cidade.length() > 0)
                 {
                     endereço.setCidade(editCidade.getText().toString());
-                }
+                }else
+                    {
+                        campoErrado(editCidade,getResources().getString(R.string.cidadeObrigatorio));
+                        return;
+                    }
                 if(spinEstado.isSelected())
                 {
                     endereço.setEstado(spinEstado.getSelectedItem().toString());
@@ -212,11 +229,10 @@ public class CadastroActivity extends AppCompatActivity {
                 if(senha.length() > 0)
                 {
 
-                    if(senha.length() > 6)
+                    if(senha.length() >= 6)
                     {
                         if(senha.contains(confirmarSenha))
                         {
-                            Log.d("onClick: ",usuário.getEmail());
                             usuário.setValidated(true);
                             if(bapi.usuarioExist(usuário))
                             {
@@ -231,7 +247,7 @@ public class CadastroActivity extends AppCompatActivity {
                                     finish();
                                 }else
                                 {
-                                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha),Toast.LENGTH_LONG).show();
+                                    campoErrado(editEmail,getResources().getString(R.string.falha));
                                 }
 
                             }
@@ -266,5 +282,7 @@ public class CadastroActivity extends AppCompatActivity {
     {
         view.requestFocus();
         Toast.makeText(getApplicationContext(),menssagem,Toast.LENGTH_LONG).show();
+        formCad.setVisibility(View.VISIBLE);
+        progressCad.setVisibility(View.INVISIBLE);
     }
 }

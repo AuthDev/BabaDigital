@@ -3,5 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/sair" />
-    <item android:title="Conta" />
+    <item
+        android:title="Conta"
+        android:visible="false" />
 </menu>

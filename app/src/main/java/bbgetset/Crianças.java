@@ -2,15 +2,11 @@ package bbgetset;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.security.PrivateKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.jar.JarEntry;
 
 
 /**
@@ -68,11 +64,11 @@ public class Crianças {
                     vacinaIdade = new VacinaIdade();
 
                     vacina.setNome(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getString("nome"));
-                    vacina.setInformaçao(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getString("informacao"));
+                    vacina.setDescricao(jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getString("informacao"));
 
-                    vacina.setVacinaIdade(jsonArray.getJSONObject(i).getJSONObject("vacinasTomadas").getString("vacinaIdade"));
+                   // vacina.setVacinaIdade(jsonArray.getJSONObject(i).getJSONObject("vacinasTomadas").getString("vacinaIdade"));
                     vacinaTomada = new VacinaTomada();
-                    vacinaTomada.setVacina(vacina);
+                  //  vacinaTomada.setVacina(vacina);
 
                     Date date;
                     DateFormat vl = new SimpleDateFormat("dd/MM/yyyy");
@@ -133,12 +129,12 @@ public class Crianças {
 
                 for (int j = 0; j < criancaUn.getVacinasTomadas().size() ; j++) {
 
-                    jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("nome",criancaUn.getVacinasTomadas().get(j).getVacina().getNome());
-                    jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("informacao",criancaUn.getVacinasTomadas().get(j).getVacina().getInformaçao());
+                   // jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("nome",criancaUn.getVacinasTomadas().get(j).getVacina().getNome());
+                    //jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("informacao",criancaUn.getVacinasTomadas().get(j).getVacina().getDescricao());
 
 
                     for (int k = 0; k < jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").length();k++) {
-                        jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").put(criancaUn.getVacinasTomadas().get(j).getVacina().getVacinaIdade());
+                     //   jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).getJSONArray("vacinaIdade").put(criancaUn.getVacinasTomadas().get(j).getVacina().getVacinaIdade());
                     }
 
                     jsonArray.getJSONObject(i).getJSONArray("vacinasTomadas").getJSONObject(j).put("validade",criancaUn.getVacinasTomadas().get(j).getValidade());

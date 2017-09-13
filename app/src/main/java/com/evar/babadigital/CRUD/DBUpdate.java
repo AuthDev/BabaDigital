@@ -4,13 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
 
 import bbgetset.Criança;
-import bbgetset.Notificacoes;
+import bbgetset.Notificacao;
 import bbgetset.Usuário;
 import bbgetset.Vacina;
 import bbgetset.VacinaTomada;
@@ -80,9 +78,6 @@ public class DBUpdate extends SQLiteOpenHelper{
     {
         openDB();
         ContentValues values = new ContentValues();
-        values.put("nome",vacina.getNome());
-        values.put("informacoes",vacina.getInformaçao());
-        values.put("vacinaIdade", vacina.getVacinaIdade());
 
         try {
             db.insert(TABLE_VACINAS,null,values);
@@ -97,15 +92,51 @@ public class DBUpdate extends SQLiteOpenHelper{
             db.close();
         }
     }
+    public boolean addVacinas(ArrayList<Vacina> vacina)
+    {
+        if (vacina == null)
+        {
+            return false;
+        }
+
+        openDB();
+        ContentValues values;
+        for (int i = 0; i < vacina.size(); i++) {
+            values = new ContentValues();
+            values.put("cod",vacina.get(i).getCod());
+            values.put("idade",vacina.get(i).getDias());
+            values.put("vacina",vacina.get(i).getNome());
+            values.put("dose",vacina.get(i).getDoses());
+            values.put("descricao",vacina.get(i).getDescricao());
+            values.put("publica",String.valueOf(vacina.get(i).isPublica()));
+            values.put("particular",String.valueOf(vacina.get(i).isParticular()));
+            values.put("intervalo",vacina.get(i).getIntervalo());
+
+            try {
+                db.replace(TABLE_VACINAS,null,values);
+
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        db.close();
+        return true;
+
+    }
     public boolean addVacinaTomada(VacinaTomada vacinaTomada)
     {
         openDB();
         ContentValues values = new ContentValues();
-        values.put("data",vacinaTomada.getData().toString());
-        values.put("local",vacinaTomada.getLocalTomado());
-        values.put("validade", vacinaTomada.getValidade().toString());
-        values.put("vacina_cod", vacinaTomada.getVacinaCod());
-        values.put("crianca_cod", vacinaTomada.getCriancaCod());
+        values.put("data",vacinaTomada.getData().getTime());
+        values.put("localTomado",vacinaTomada.getLocalTomado());
+        values.put("validade", String.valueOf(vacinaTomada.getValidade().getTime()));
+        values.put("vacina_cod", vacinaTomada.getCod());
+        values.put("dose", vacinaTomada.getDose());
+        values.put("isTomada", String.valueOf(vacinaTomada.isTomada()));
+        values.put("personalizadas", String.valueOf(vacinaTomada.isPersonalizada()));
+        values.put("criança_cod", vacinaTomada.getCriancaCod());
+        values.put("idade",vacinaTomada.getDias());
 
         try {
             db.insert(TABLE_VACINAS_TOMADAS,null,values);
@@ -120,15 +151,55 @@ public class DBUpdate extends SQLiteOpenHelper{
         }
     }
 
-    public boolean addNotificacoes(Notificacoes notificacoes)
+
+    public boolean addNotificacoes(Notificacao notificacao)
     {
         openDB();
         ContentValues values = new ContentValues();
-        values.put("descricao",notificacoes.getDescricao());
-        values.put("crianca_cod",notificacoes.getCriança().getCod());
+        values.put("titulo", notificacao.getTitulo());
+        values.put("dose", notificacao.getDose());
+        values.put("descricao", notificacao.getDescricao());
+        values.put("item_cod", notificacao.getCodItem());
+        values.put("crianca_cod", notificacao.getCriança().getCod());
 
         try {
             db.insert(TABLE_NOTICACOES,null,values);
+            return true;
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }finally {
+            db.close();
+        }
+    }
+
+    public boolean deleteNotificacoes(Notificacao notificacao)
+    {
+        openDB();
+
+
+        try {
+            db.delete(TABLE_NOTICACOES,"item_cod="+notificacao.getCodItem()+" and crianca_cod="+notificacao.getCriança().getCod()+" and dose="+notificacao.getDose(),null);
+            return true;
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }finally {
+            db.close();
+        }
+    }
+
+    public boolean deleteAllNotifByCrianca(int CodCrianca)
+    {
+        openDB();
+
+
+        try {
+            db.delete(TABLE_NOTICACOES,"crianca_cod="+CodCrianca,null);
             return true;
 
         }catch (Exception e)
@@ -169,9 +240,7 @@ public class DBUpdate extends SQLiteOpenHelper{
     {
         openDB();
         ContentValues values = new ContentValues();
-        values.put("nome",vacina.getNome());
-        values.put("informacoes",vacina.getInformaçao());
-        values.put("vacinaIdade", vacina.getVacinaIdade());
+
 
         try {
             db.insert(TABLE_VACINAS,null,values);
@@ -191,14 +260,31 @@ public class DBUpdate extends SQLiteOpenHelper{
     {
         openDB();
         ContentValues values = new ContentValues();
-        values.put("data",vacinaTomada.getData().toString());
-        values.put("local",vacinaTomada.getLocalTomado());
-        values.put("validade", vacinaTomada.getValidade().toString());
-        values.put("vacina_cod", vacinaTomada.getVacinaCod());
-        values.put("crianca_cod", vacinaTomada.getCriancaCod());
+        values.put("data",vacinaTomada.getData().getTime());
+        values.put("localTomado",vacinaTomada.getLocalTomado());
+        values.put("validade", vacinaTomada.getValidade().getTime());
+        values.put("dose",vacinaTomada.getDose());
+        values.put("idade",vacinaTomada.getDias());
+
 
         try {
-            db.insert(TABLE_VACINAS_TOMADAS,null,values);
+            db.update(TABLE_VACINAS_TOMADAS,values,"cod="+vacinaTomada.getVacinaTomadaCod(),null);
+            return true;
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }finally {
+            db.close();
+        }
+    }
+    public boolean deleteVacinaTomada(VacinaTomada vacinaTomada)
+    {
+        openDB();
+
+        try {
+            db.delete(TABLE_VACINAS_TOMADAS,"cod ="+vacinaTomada.getVacinaTomadaCod(),null);
             return true;
 
         }catch (Exception e)
@@ -214,8 +300,24 @@ public class DBUpdate extends SQLiteOpenHelper{
 
         openDB();
         try {
-            Log.e("deleteCrianca: ", " "+codigo);
             db.delete(TABLE_CRIANÇAS,"cod="+codigo,null);
+            deleteAllNotifByCrianca(codigo);
+            return true;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }finally {
+            db.close();
+        }
+
+    }
+
+    public boolean deleteVacinaTomada(int codigo) {
+
+        openDB();
+        try {
+            db.delete(TABLE_VACINAS_TOMADAS,"cod="+codigo,null);
             return true;
         }catch (Exception e)
         {

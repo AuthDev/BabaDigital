@@ -4,20 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.evar.babadigital.CriancasEditarActivity;
 import com.evar.babadigital.R;
 
 import java.util.ArrayList;
 
 import bbgetset.Noticia;
-import bbgetset.Sexo;
 
 /**
  * Created by Maxson Jordan on 23/01/2017.
@@ -72,7 +69,7 @@ public class AdapterNoticiasList extends RecyclerView.Adapter<AdapterNoticiasLis
 
     @Override
     public AdapterNoticiasList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemnoticiaslist,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_noticias_list,parent,false);
         this.context = parent.getContext();
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -105,6 +102,12 @@ public class AdapterNoticiasList extends RecyclerView.Adapter<AdapterNoticiasLis
 
     @Override
     public int getItemCount() {
-       return noticias.size();
+        if(noticias != null) {
+            return noticias.size();
+
+        }else
+            {
+                return 0;
+            }
     }
 }

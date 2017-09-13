@@ -20,6 +20,7 @@ public class DBCreate extends SQLiteOpenHelper{
     private static final int VERSAO_DB = 1;
     private static final String TABLE_CRIANÇAS = "crianças";
     private static final String TABLE_VACINAS = "vacinas";
+    private static final String TABLE_VACINAS_PERSONALIZADAS = "vacinas_personalizadas";
     private static final String TABLE_VACINAS_TOMADAS = "vacinas_tomadas";
     private static final String TABLE_NOTICACOES = "notificacoes";
 
@@ -54,24 +55,45 @@ public class DBCreate extends SQLiteOpenHelper{
                 + "dataNascimento TEXT,"
                 + "usuarioEmail TEXT)";
         String createTable2 =  "CREATE TABLE IF NOT EXISTS "+TABLE_VACINAS+" ("
-                + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "nome TEXT,"
-                + "informacoes TEXT,"
-                + "vacinaIdade TEXT,"
-                + "rede TEXT)";
+                + "cod INT PRIMARY KEY,"
+                + "idade INT,"
+                + "vacina TEXT,"
+                + "dose INT,"
+                + "descricao TEXT,"
+                + "publica TEXT,"
+                + "particular TEXT,"
+                + "Intervalo INT)";
+
 
         String createTable3 =  "CREATE TABLE IF NOT EXISTS "+TABLE_VACINAS_TOMADAS+" ("
                 + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "data TEXT,"
                 + "localTomado TEXT,"
-                + "validade TEXT,"
+                + "dose INT,"
+                + "criança_cod INT,"
                 + "vacina_cod INT,"
-                + "criança_cod INT)";
+                + "isTomada INT,"
+                + "personalizadas INT,"
+                + "validade TEXT,"
+                + "idade INT)";
 
-        String createTable4 = "CREATE TABLE IF NOT EXISTIS "+TABLE_NOTICACOES+"("
+        String createTable4 = "CREATE TABLE IF NOT EXISTS "+TABLE_NOTICACOES+"("
                 + "cod INTEGER PRIMARY KEY AUTOINCREMENT,"
-                +"descricao TEXT,"
+                + "titulo TEXT,"
+                + "descricao TEXT,"
+                + "item_cod INT,"
+                + "dose INT,"
                 +"crianca_cod INT)";
+
+        String createTable5 =  "CREATE TABLE IF NOT EXISTS "+TABLE_VACINAS_PERSONALIZADAS+" ("
+                + "cod INT PRIMARY KEY,"
+                + "idade INT,"
+                + "vacina TEXT,"
+                + "dose INT,"
+                + "descricao TEXT,"
+                + "publica TEXT,"
+                + "particular TEXT,"
+                + "Intervalo INT)";
 
 
 
@@ -80,6 +102,7 @@ public class DBCreate extends SQLiteOpenHelper{
             db.execSQL(createTable2);
             db.execSQL(createTable3);
             db.execSQL(createTable4);
+            db.execSQL(createTable5);
             return true;
 
 

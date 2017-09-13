@@ -6,6 +6,8 @@
     <color name="azul1">#4079ff</color>
     <color name="azul2">#3d53b6</color>
     <color name="azul3">#244dae</color>
+    <color name="menino">#244dae</color>
+    <color name="menina">#e95ecf</color>
     <color name="menuCorSecundaria">#5eb5c9</color>
     <color name="cinClaro">#fdf7f7</color>
     <color name="preto">#380214</color>
@@ -15,7 +17,11 @@
     <color name="secondary_text_material_light">#bd000000</color>
     <color name="secondary_text_material_dark">#f0141313</color>
     <color name="background_material_dark">#fefbfb</color>
-    <color name="BackGray">#ffdcdc</color>
+    <color name="BackGray">#fcdbe6</color>
     <color name="primary_dark_material_light">#fefdfd</color>
+    <color name="primary_material_light">#e91e63</color>
+    <color name="primary_material_dark">#3f51b5</color>
+    <color name="BemVindo1Pink">#c10250</color>
+    <color name="BemVindo2Pink">#03bcbf</color>
 
 </resources>

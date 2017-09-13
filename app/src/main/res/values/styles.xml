@@ -32,7 +32,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="bbadigitalBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:windowBackground">?attr/colorAccent</item>
         <item name="android:colorBackground">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/cinClaro</item>
@@ -44,5 +44,15 @@
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="boyCaderneta" parent="android:Theme">
+        <item name="android:colorForeground">@color/cardview_light_background</item>
+        <item name="android:textColorPrimary">@color/cardview_light_background</item>
+    </style>
+
+    <style name="girlCaderneta" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorForeground">@color/cardview_light_background</item>
+        <item name="android:textColorPrimary">@color/cardview_light_background</item>
+    </style>
 
 </resources>

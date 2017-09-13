@@ -10,14 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.evar.babadigital.CRUD.DBRead;
 
-import java.util.ArrayList;
-
-import bbgetset.Criança;
 import bbgetset.Usuário;
 
 public class InicioActivity extends AppCompatActivity {
@@ -30,6 +28,8 @@ public class InicioActivity extends AppCompatActivity {
     private LinearLayout btnNoticias;
     private LinearLayout btnInformacoes;
     private LinearLayout btnConfiguracoes;
+    private Button verBTN;
+    int qtNotificacoes;
     DBRead dbRead;
 
 
@@ -41,19 +41,20 @@ public class InicioActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         dbRead = new DBRead(getApplicationContext());
         int qtOfCriancas = dbRead.getCrianças(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).size();
+        qtNotificacoes = dbRead.getNotificacoesQt(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,"")));
 
         nomeCompleto = (TextView)findViewById(R.id.inicio_nomeCompleto);
         criançasQt = (TextView)findViewById(R.id.inicio_criancasQt);
         notificaçoesQt = (TextView)findViewById(R.id.inicio_noticacoesQt);
+
+
 
         prefs = getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE);
         usuário = new Usuário(prefs.getString(PrefsTitles.jsUsuario,""));
         nomeCompleto.setText(usuário.getNome());
         //criançasQt.setText(new BAPI().getCrianças(usuário).size());
 
-
-
-
+        verBTN = (Button)findViewById(R.id.verBTN);
         btnCriancas = (LinearLayout)findViewById(R.id.inicio_criancas);
         btnCaderneta = (LinearLayout)findViewById(R.id.inicio_caderneta);
         btnInformacoes = (LinearLayout)findViewById(R.id.inicio_informacoes);
@@ -61,7 +62,10 @@ public class InicioActivity extends AppCompatActivity {
         btnConfiguracoes = (LinearLayout)findViewById(R.id.inicio_configuracoes);
 
         criançasQt.setText(" "+qtOfCriancas);
+    //    notificaçoesQt.setText(" "+qtNotificacoes);
 
+        Intent it = new Intent(this,IntentServiceBB.class);
+        startService(it);
 
         btnCriancas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,14 +78,14 @@ public class InicioActivity extends AppCompatActivity {
         btnCaderneta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),CadernetaActivity.class));
+                startActivity(new Intent(getApplicationContext(),CadernetaOpActivity.class));
             }
         });
 
         btnInformacoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),informacoesActivity.class));
+                startActivity(new Intent(getApplicationContext(),InformacoesActivity.class));
             }
         });
 
@@ -98,6 +102,13 @@ public class InicioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ConfiguracoesActivity.class));
+            }
+        });
+
+        verBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ListarNotificacoesActivity.class));
             }
         });
 
@@ -140,7 +151,9 @@ public class InicioActivity extends AppCompatActivity {
         dbRead = new DBRead(getApplicationContext());
         int qtOfCriancas = dbRead.getCrianças(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,""))).size();
 
+        qtNotificacoes = dbRead.getNotificacoesQt(new Usuário(getSharedPreferences(PrefsTitles.prefsName,Context.MODE_PRIVATE).getString(PrefsTitles.jsUsuario,"")));
         criançasQt.setText(""+qtOfCriancas);
+        notificaçoesQt.setText(""+qtNotificacoes);
         super.onResume();
     }
 }

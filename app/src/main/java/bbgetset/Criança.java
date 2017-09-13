@@ -1,14 +1,10 @@
 package bbgetset;
 
-import android.util.Log;
-import android.widget.DatePicker;
 
-import java.sql.Time;
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Timer;
 
 
 /**
@@ -63,24 +59,56 @@ public class Criança {
                 if(mesAtual > mesNascimento)
                 {
                     old = mesAtual - mesNascimento;
-                    idade = old + " meses de idade";
+                    if(old == 1)
+                    {
+                        idade = old + " mês de idade";
+                    }else{
+                        idade = old + " meses de idade";
+                    }
                 }else
                     {
                         if(mesAtual < mesNascimento) {
                             old = (12 - mesNascimento) + mesAtual;
-                            idade = old + " meses de idade";
+                            if(old == 1)
+                            {
+                                idade = old + " mês de idade";
+                            }else
+                                {
+                                    idade = old + " meses de idade";
+                                }
 
                         }else
                             {
-                                if (diaAtual > diaNascimento) {
+                                if (diaAtual >= diaNascimento) {
                                     old = diaAtual - diaNascimento;
-                                    idade = old + " dias";
+                                    if(old == 1)
+                                    {
+                                        idade = old + " dia";
+                                    }else
+                                    {
+                                        if(old == 0)
+                                        {
+                                            idade = " Criança recém-nascida";
+                                        }else
+                                            {
+                                                idade = old + " dias";
+                                            }
+
+                                    }
+
                                 }
                             }
                     }
             }else
                 {
-                    idade = old +" anos de idade";
+                    if(old == 1)
+                    {
+                        idade = old +" ano de idade";
+                    }else
+                        {
+                            idade = old +" anos de idade";
+                        }
+
                 }
             return idade;
 
@@ -144,12 +172,14 @@ public class Criança {
     }
     public int getDiasNascimento()
     {
-        int dia = 0;
-        Date date = new Date(System.currentTimeMillis());
-        int diaAtual = date.getDate();
+        int dias = 0;
+        int anos = 0;
+        DateTime nasc = new DateTime(getDataNascimento());
+        DateTime hoje = DateTime.now();
+        anos = hoje.minusYears(nasc.getYear()).minusDays(nasc.getDayOfYear()).getYear();
+        dias = 365 * (anos) + (hoje.getDayOfYear()-nasc.getDayOfYear());
 
-        dia += dia *getMesesIdade()+diaAtual;
-        return  dia;
+        return  dias;
     }
 
     public String getNome() {

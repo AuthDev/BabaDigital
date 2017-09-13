@@ -1,13 +1,19 @@
 <resources>
-    <string name="app_name">Baba Digital</string>
+    <string name="facebook_app_id">118079708814492</string>
+    <string name="fb_login_protocol_scheme">fb118079708814492</string>
+
+    <string name="app_name">Babá Digital</string>
+    <string name="notificacao_descricao_muitas">Vacinas pendentes!</string>
+    <string name="notificacao_descricao">Vacina </string>
+    <string name="notificacao_disponivel">pendente! </string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_inicio">Inicio</string>
+    <string name="title_activity_inicio">Início</string>
     <string name="deleteSucesso">Apagado com sucesso!</string>
     <string name="deleteFalha">Falha ao tentar apagar!</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+    l is A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
         "technologically advanced and open to imagination and magic.\n"
         "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
@@ -94,17 +100,18 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_login">Entrar</string>
+    <string name="title_activity_boas_vindas">Bem-vindo(a)</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Senha</string>
     <string name="action_sign_in">Entrar</string>
     <string name="loginActivity_btnCadastrar">Cadastrar</string>
     <string name="action_sign_in_short">Entrar</string>
-    <string name="error_invalid_email">Este endereço de e-mail e invalido!</string>
-    <string name="error_invalid_password">Senha muito curta</string>
-    <string name="error_incorrect_password">Senha incorreta</string>
-    <string name="error_field_required">Este campo e necessario</string>
+    <string name="error_invalid_email">Este endereço de e-mail é inválido!</string>
+    <string name="error_invalid_password">Senha muito curta!</string>
+    <string name="error_incorrect_password">Senha incorreta!</string>
+    <string name="error_field_required">Este campo é necessário</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -117,52 +124,55 @@
     <string name="nomeUsuario">Nome completo de usuário</string>
     <string name="criancas">Crianças : </string>
     <string name="qt">0</string>
-    <string name="notificacoes">Notificações :</string>
+    <string name="notificacao">Notificações :</string>
     <string name="criancass">Crianças</string>
-    <string name="textCriancas">Veja aqui suas noticias cadastradas. Você pode editar,adcionar ou remover.</string>
+    <string name="textCriancas">Veja aqui as crianças cadastradas. Você pode editar, adcionar ou remover.</string>
     <string name="caderneta">Caderneta</string>
-    <string name="cadernetaText">Gerencie as vacinas de suas noticias.</string>
+    <string name="cadernetaText">Gerencie as vacinas de suas crianças.</string>
     <string name="informacoes">Informações</string>
     <string name="informacoesText">Leia informacões sobre vacinas e onde podem ser encontradas.</string>
-    <string name="noticias">Notícias</string>
+    <string name="vacinas">Notícias</string>
     <string name="noticiasText">Veja notícias e dicas exclusivas de saúde.</string>
     <string name="configuracoes">Configurações</string>
-    <string name="configuracoesText">faça seus ajustes e predefinições para melhor aprimoramento do seu app.</string>
+    <string name="configuracoesText">Ative ou desative notificações deste aplicativo.</string>
     <string name="title_activity_outraapagar">outraapagar</string>
     <string name="dadosUsuario">Dados de usuário</string>
     <string name="title_activity_cadastrar">CadastrarActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_cadastro">CadastroActivity</string>
-    <string name="nome">Nome*</string>
-    <string name="emailO">Email*</string>
+    <string name="nome">Nome do responsável*</string>
+    <string name="emailO">E-mail*</string>
+    <string name="cidadeObrigatorio">O campo cidade é obrigatório!</string>
     <string name="senhaO">Senha*</string>
-    <string name="telefone">Telefone</string>
+    <string name="telefone">Telefone fixo</string>
     <string name="Celular">Celular*</string>
-    <string name="dataNascimento">Data de Nascimento*</string>
-    <string name="cidade">Cidade</string>
-    <string name="Estado">Estado</string>
+    <string name="dataNascimento">Data de nascimento*</string>
+    <string name="cidade">Cidade*</string>
+    <string name="Estado">Estado*</string>
     <string name="cadastro">Cadastro</string>
     <string name="numero">Número</string>
-    <string name="rua">Rua</string>
-    <string name="pais">País</string>
+    <string name="rua">Rua(Opcional)</string>
+    <string name="pais">País(Opcional)</string>
     <string name="sexo">Sexo*</string>
     <string name="endereço">Endereço</string>
-    <string name="bairro">Bairro</string>
-    <string name="complemento">Complemento</string>
+    <string name="bairro">Bairro(Opcional)</string>
+    <string name="complemento">Complemento(Opcional)</string>
+    <string name="cpf">CPF* (apenas números)</string>
     <string name="registrar">Registrar</string>
     <string name="cadastro_erroNomeIvalido">Nome digitado não parece válido!</string>
-    <string name="cadastro_erroNomeVazio">O campo nome esta vazio!</string>
+    <string name="cadastro_erroCPF">O campo cpf é obrigatório!</string>
+    <string name="cadastro_erroNomeVazio">O campo nome está vazío!</string>
     <string name="cadastro_erroEmailIvalido">O email digitado não parece válido!</string>
     <string name="cadastro_erroSenhaCurta">Senha muito curta!</string>
     <string name="cadastro_erroCelularVazio">O campo celular está vazio!</string>
-    <string name="cadastro_erroCidadeVazio">O campo cidade esta vazio!</string>
-    <string name="cadastro_erroRuaVazio">o Campo rua esta vazio!</string>
+    <string name="cadastro_erroCidadeVazio">O campo cidade está vazio!</string>
+    <string name="cadastro_erroRuaVazio">O campo rua está vazio!</string>
     <string name="cadastro_erroPaisIvalido">O país não parece válido!</string>
     <string name="cadastro_erroBairroVazio">O campo bairro está vazio!</string>
     <string name="cadastro_erroDataNascimentoInvalido">A data de nascimento não parece válida!</string>
     <string name="cadastro_erroSelecioneSexo">Selecione um sexo!</string>
     <string name="cadastro_erroEstadoVazio">Selecione um estado!</string>
-    <string name="confirmarSenha">Confirmar Senha*</string>
+    <string name="confirmarSenha">Confirmar senha*</string>
     <string name="cadastro_erroSenhaNaoConferem">Senhas não conferem!</string>
     <string name="cadastro_erroSenhaMuitoCurta">Senhas muito curtas</string>
     <string name="cadastro_erroCampoSenhaVazio">O campo senha está vazio</string>
@@ -173,6 +183,9 @@
     <string name="emailExist">Email já existe!</string>
     <string name="sair">Sair</string>
     <string name="configConta">Conta</string>
+    <string name="publica">Pública</string>
+    <string name="particular">Particular</string>
+    <string name="publicaParticular">Pública/Particular</string>
     <string-array name="estados">
         <item>AC</item>
         <item>AL</item>
@@ -288,13 +301,28 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_nova_crianca">novaCriancaActivity</string>
     <string name="adicionar">Adicionar</string>
-    <string name="garota">Garota</string>
-    <string name="garoto">Garoto</string>
+    <string name="garota">Menina</string>
+    <string name="garoto">Menino</string>
     <string name="nomeDaCrianca">Nome da Criança</string>
     <string name="novaCrianca">Nova criança</string>
     <string name="title_activity_criancas_editar">Editar Criança</string>
     <string name="apagar">Apagar</string>
     <string name="salvar">Salvar</string>
     <string name="showNotifications">Mostrar notificações</string>
+    <string name="title_activity_informacoes_view">Informações</string>
+    <string name="title_activity_caderneta_lc">CadernetaLCActivity</string>
+    <string name="Ver">Ver</string>
+    <string name="semcriancas">Não há crianças cadastradas!</string>
+    <string name="selecionarCrianca">Selecionar criança...</string>
+    <string name="tomada">Tomada</string>
+    <string name="title_activity_vacina_tomada">VacinaTomadaActivity</string>
+    <string name="vacinasTomadas">Registrar vacina tomada</string>
+    <string name="dose">Dose</string>
+    <string name="dataVacina">Data da vacina</string>
+    <string name="localTomado">Local tomado</string>
+    <string name="title_activity_add_vacina_list">Adcionar vacina</string>
+    <string name="selecionar">Selecionar</string>
+    <string name="title_activity_listar_notificacoes">ListarNotificacoesActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

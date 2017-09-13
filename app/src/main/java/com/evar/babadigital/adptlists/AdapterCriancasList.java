@@ -1,24 +1,18 @@
 package com.evar.babadigital.adptlists;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.evar.babadigital.CriancasEditarActivity;
 import com.evar.babadigital.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import bbgetset.Criança;
 import bbgetset.Sexo;
@@ -59,7 +53,6 @@ public class AdapterCriancasList extends RecyclerView.Adapter<AdapterCriancasLis
         @Override
         public void onClick(View v) {
 
-            Log.e("onClick EDITAR: ","Você clicou em EDitar"+ this.codCrianca);
             Intent editar = new Intent(v.getContext(), CriancasEditarActivity.class);
             editar.putExtra("nome",this.nomeString);
             editar.putExtra("dataNascimento",this.dataNascimentoString);
@@ -79,7 +72,7 @@ public class AdapterCriancasList extends RecyclerView.Adapter<AdapterCriancasLis
 
     @Override
     public AdapterCriancasList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemopcriancas,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_criancas,parent,false);
         this.context = parent.getContext();
         ViewHolder vh = new ViewHolder(v);
         return vh;

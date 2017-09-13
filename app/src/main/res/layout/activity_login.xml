@@ -161,7 +161,8 @@
                 android:contentDescription="@string/app_name"
                 android:text="@string/entrarFacebook"
                 android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <Space
                 android:layout_width="match_parent"

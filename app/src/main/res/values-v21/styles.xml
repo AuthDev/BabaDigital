@@ -18,7 +18,7 @@
     </style>
 
     <style name="bbadigitalBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:windowBackground">?attr/colorAccent</item>
         <item name="android:colorBackground">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/cinClaro</item>
@@ -27,5 +27,12 @@
         <item name="android:colorForeground">@color/cinClaro</item>
         <item name="android:textColorSecondary">@color/cinClaro</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="boyCaderneta" parent="android:Theme.Material">
+        <item name="android:colorForeground">@color/cardview_light_background</item>
+        <item name="android:navigationBarColor">@android:color/background_light</item>
+        <item name="android:textColorPrimary">@color/cardview_light_background</item>
+        <item name="android:colorPrimary">@color/primary_material_dark</item>
     </style>
 </resources>

@@ -11,5 +11,6 @@
         android:id="@+id/conta"
         android:orderInCategory="100"
         android:title="@string/configConta"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>
